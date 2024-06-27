@@ -34,9 +34,14 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/TeleportAbsolute.srv"
   "srv/TeleportRelative.srv")
 
-set (CMAKE_AUTOMOC ON)
-
 rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+
+if (${QT_VERSION_MAJOR} GREATER "5")
+  qt_standard_project_setup()
+  qt_wrap_cpp(turtlesim_node_MOCS include/turtlesim/turtle_frame.hpp)
+else()
+  qt5_wrap_cpp(turtlesim_node_MOCS include/turtlesim/turtle_frame.hpp)
+endif()
 
 add_executable(turtlesim_node
   src/turtlesim.cpp
