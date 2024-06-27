@@ -13,7 +13,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(rcl_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
@@ -21,7 +22,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
-include_directories(include ${Qt5Widgets_INCLUDE_DIRS})
+include_directories(include ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS})
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/RotateAbsolute.action"
@@ -33,7 +34,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/TeleportAbsolute.srv"
   "srv/TeleportRelative.srv")
 
-qt5_wrap_cpp(turtlesim_node_MOCS include/turtlesim/turtle_frame.hpp)
+set (CMAKE_AUTOMOC ON)
 
 rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 
@@ -47,8 +48,9 @@ target_link_libraries(turtlesim_node PRIVATE
   ament_index_cpp::ament_index_cpp
   ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
-  Qt5::Widgets
   ${rcl_interfaces_TARGETS}
+  Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Widgets
   rclcpp::rclcpp
   rclcpp_action::rclcpp_action
   ${std_srvs_TARGETS}
