@@ -36,7 +36,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 
 rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 
-if (${QT_VERSION_MAJOR} GREATER "5")
+if(${QT_VERSION_MAJOR} GREATER "5")
   qt_standard_project_setup()
   qt_wrap_cpp(turtlesim_node_MOCS include/turtlesim/turtle_frame.hpp)
 else()
