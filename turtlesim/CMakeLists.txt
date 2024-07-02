@@ -22,8 +22,6 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
-include_directories(include ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS})
-
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/RotateAbsolute.action"
   "msg/Color.msg"
@@ -49,6 +47,11 @@ add_executable(turtlesim_node
   src/turtle_frame.cpp
   ${turtlesim_node_MOCS}
 )
+target_include_directories(turtlesim_node PRIVATE
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+  ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS}
+)
 target_link_libraries(turtlesim_node PRIVATE
   ament_index_cpp::ament_index_cpp
   ${cpp_typesupport_target}
@@ -62,6 +65,10 @@ target_link_libraries(turtlesim_node PRIVATE
 )
 
 add_executable(turtle_teleop_key tutorials/teleop_turtle_key.cpp)
+target_include_directories(turtle_teleop_key PRIVATE
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
 target_link_libraries(turtle_teleop_key PRIVATE
   "${cpp_typesupport_target}"
   ${geometry_msgs_TARGETS}
@@ -70,6 +77,10 @@ target_link_libraries(turtle_teleop_key PRIVATE
 )
 
 add_executable(draw_square tutorials/draw_square.cpp)
+target_include_directories(draw_square PRIVATE
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
 target_link_libraries(draw_square PRIVATE
   "${cpp_typesupport_target}"
   ${geometry_msgs_TARGETS}
@@ -78,6 +89,10 @@ target_link_libraries(draw_square PRIVATE
 )
 
 add_executable(mimic tutorials/mimic.cpp)
+target_include_directories(mimic PRIVATE
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
 target_link_libraries(mimic PRIVATE
   "${cpp_typesupport_target}"
   ${geometry_msgs_TARGETS}
