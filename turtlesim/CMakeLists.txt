@@ -13,9 +13,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
-find_package(rcl_interfaces REQUIRED)
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -44,9 +43,7 @@ target_link_libraries(turtlesim_node PRIVATE
   ament_index_cpp::ament_index_cpp
   ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
-  ${rcl_interfaces_TARGETS}
   ${turtlesim_msgs_TARGETS}
-  Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   rclcpp::rclcpp
   rclcpp_action::rclcpp_action
