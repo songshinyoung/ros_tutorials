@@ -18,9 +18,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(rcl_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(turtlesim_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/RotateAbsolute.action"
@@ -70,7 +70,7 @@ target_include_directories(turtle_teleop_key PRIVATE
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
 target_link_libraries(turtle_teleop_key PRIVATE
-  "${cpp_typesupport_target}"
+  ${turtlesim_msgs_TARGETS}
   ${geometry_msgs_TARGETS}
   rclcpp::rclcpp
   rclcpp_action::rclcpp_action
@@ -82,7 +82,7 @@ target_include_directories(draw_square PRIVATE
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
 target_link_libraries(draw_square PRIVATE
-  "${cpp_typesupport_target}"
+  ${turtlesim_msgs_TARGETS}
   ${geometry_msgs_TARGETS}
   rclcpp::rclcpp
   ${std_srvs_TARGETS}
@@ -94,7 +94,7 @@ target_include_directories(mimic PRIVATE
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
 target_link_libraries(mimic PRIVATE
-  "${cpp_typesupport_target}"
+  ${turtlesim_msgs_TARGETS}
   ${geometry_msgs_TARGETS}
   rclcpp::rclcpp
 )
@@ -104,7 +104,11 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(TARGETS turtlesim_node turtle_teleop_key draw_square mimic
+install(TARGETS
+  turtlesim_node
+  turtle_teleop_key
+  draw_square
+  mimic
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY images
