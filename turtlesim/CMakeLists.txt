@@ -22,18 +22,6 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(turtlesim_msgs REQUIRED)
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "action/RotateAbsolute.action"
-  "msg/Color.msg"
-  "msg/Pose.msg"
-  "srv/Kill.srv"
-  "srv/SetPen.srv"
-  "srv/Spawn.srv"
-  "srv/TeleportAbsolute.srv"
-  "srv/TeleportRelative.srv")
-
-rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
-
 if(${QT_VERSION_MAJOR} GREATER "5")
   qt_standard_project_setup()
   qt_wrap_cpp(turtlesim_node_MOCS include/turtlesim/turtle_frame.hpp)
@@ -57,6 +45,7 @@ target_link_libraries(turtlesim_node PRIVATE
   ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
   ${rcl_interfaces_TARGETS}
+  ${turtlesim_msgs_TARGETS}
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   rclcpp::rclcpp
