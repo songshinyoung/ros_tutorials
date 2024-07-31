@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-if (USE_QT6)
+if(USE_QT6)
   find_package(Qt6 REQUIRED COMPONENTS Widgets)
   set(QT_VERSION_MAJOR 6)
 else()
